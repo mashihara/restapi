@@ -26,7 +26,6 @@ router.get( '/:id', function ( req, res ) {
   } );
 } );
 
-
 // POST insert data
 router.post( '/', function ( req, res ) {
   collection(COL).insertOne( req.body ).then(function(r) {
