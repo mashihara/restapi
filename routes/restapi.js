@@ -3,7 +3,7 @@ var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 // MongoDB用ファイルを指定
 var collection = require( '../mongo' );
-var COL = 'restapi';
+var COL = 'default';
 
 // For Cross Origin
 router.all( '/*', function ( req, res, next ) {
@@ -13,38 +13,50 @@ router.all( '/*', function ( req, res, next ) {
 } );
 
 // GET find
-router.get( '/', function ( req, res ) {
+router.get( '/json/default', function ( req, res ) {
   collection(COL).find().toArray(function(err, docs){
     res.send(docs);
   })
 } );
 
 // GET find :id
-router.get( '/:id', function ( req, res ) {
-  collection(COL).findOne( { _id: new ObjectID( req.params.id ) }, {}, function(err, r){
-    res.send( r );
-  } );
+router.get( '/json/data', function ( req, res ) {
+  collection(COL).find().toArray(function(err, docs){
+    res.send(docs);
+  })
+} );
+
+// GET find :id
+router.get( '/json/data/:collection', function ( req, res ) {
+  collection(req.params.collection).find().toArray(function(err, docs){
+    res.send(docs);
+  })
 } );
 
 // POST insert data
-router.post( '/', function ( req, res ) {
-  collection(COL).insertOne( req.body ).then(function(r) {
+router.post( '/json/default', function ( req, res ) {
+  collection(COL).insertMany( req.body ).then(function(r) {
     res.send( r );
   });
 } );
 
-// PUT update data
-router.put( '/:id', function ( req, res ) {
-  collection(COL).findOneAndUpdate( { _id: new ObjectID( req.params.id ) }, req.body, {}, function(err, r){
+// // POST insert data
+// router.post( '/json/single/:collection', function ( req, res ) {
+//   collection(req.params.collection).insertOne( req.body ).then(function(r) {
+//     res.send( r );
+//   });
+// } );
+router.post( '/json/data', function ( req, res ) {
+  collection(COL).insertMany( req.body ).then(function(r) {
     res.send( r );
-  } );
+  });
 } );
 
-// DELETE remove data
-router.delete( '/:id', function ( req, res ) {
-  collection(COL).findOneAndDelete( { _id: new ObjectID( req.params.id ) }, {}, function(err, r){
+router.post( '/json/data/:collection', function ( req, res ) {
+  collection(req.params.collection).insertMany( req.body ).then(function(r) {
     res.send( r );
-  } );
+  });
 } );
+
 
 module.exports = router;
