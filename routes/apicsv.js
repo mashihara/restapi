@@ -5,8 +5,8 @@ var ObjectID = require('mongodb').ObjectID;
 var collection = require( '../mongo' );
 var COL = 'defaultcsv';
 
-var body = require('body-parser');
-router.use(body.raw({ type:'*/*' }));
+var bodyParser = require('body-parser');
+router.use(bodyParser.text({ type:'*/*' }));
 
 // For Cross Origin
 router.all( '/*', function ( req, res, next ) {
