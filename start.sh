@@ -1,1 +1,1 @@
-sudo npm run start &
+sudo npm run start >> restapi.log &
