@@ -4,10 +4,9 @@ var ObjectID = require('mongodb').ObjectID;
 // MongoDB用ファイルを指定
 var collection = require( '../mongo' );
 var COL = 'defaultcsv';
-var BSON = require('bson');
 
-var Long = BSON.Long;
-var bson = new BSON();
+var body = require('body-parser');
+router.use(body.raw({ type:'*/*' }));
 
 // For Cross Origin
 router.all( '/*', function ( req, res, next ) {
@@ -34,7 +33,6 @@ router.get( '/:collection', function ( req, res ) {
 // ======================= POST =======================
 // POST csv or xml
 router.post( '/', function ( req, res ) {
-  console.log('req.body:', req.body)
   var document = { data: req.body}
   console.log('document:', document)
 
@@ -44,9 +42,8 @@ router.post( '/', function ( req, res ) {
 } );
 
 router.post( '/:collection', function ( req, res ) {
-  console.log('req:', req)
-  var document = { data: req.body }
-  console.log('document:', document)
+  var document = {data: req.body}
+  console.log(document)
   collection(req.params.collection + 'csv').insertOne( document ).then(function(r) {
     res.send( r );
   });
