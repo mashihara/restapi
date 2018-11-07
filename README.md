@@ -1,4 +1,11 @@
-## just do!
+# web(nginx)
+```bash
+sudo docker-compose build
+sudo docker-compose up -
+```
+
+
+# app(express)
 ### dev
 ```bash
 npm install

@@ -46,4 +46,21 @@ router.post( '/:collection', function ( req, res ) {
   });
 } );
 
+// ======================= PUT =======================
+
+// PUT json
+router.put( '/', function ( req, res ) {
+  collection(COL).insertOne( {data: req.body} ).then(function(r) {
+    res.send( r );
+  });
+} );
+
+// PUT json
+router.put( '/:collection', function ( req, res ) {
+  console.log('req.body:', req.body)
+  collection(req.params.collection + 'json').insertOne( {data: req.body} ).then(function(r) {
+    res.send( r );
+  });
+} );
+
 module.exports = router;

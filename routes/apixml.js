@@ -43,7 +43,30 @@ router.post( '/', function ( req, res ) {
   });
 } );
 
+
 router.post( '/:collection', function ( req, res ) {
+  console.log('req:', req)
+  var document = { data: req.body }
+  console.log('document:', document)
+  collection(req.params.collection + 'xml').insertOne( document ).then(function(r) {
+    res.send( r );
+  });
+} );
+
+// ======================= PUT =======================
+// PUT csv or xml
+router.put( '/', function ( req, res ) {
+  console.log('req.body:', req.body)
+  var document = { data: req.body}
+  console.log('document:', document)
+
+  collection(COL).insertOne( document ).then(function(r) {
+    res.send( r );
+  });
+} );
+
+
+router.put( '/:collection', function ( req, res ) {
   console.log('req:', req)
   var document = { data: req.body }
   console.log('document:', document)

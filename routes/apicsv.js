@@ -49,4 +49,24 @@ router.post( '/:collection', function ( req, res ) {
   });
 } );
 
+// ======================= PUT =======================
+// PUT csv or xml
+router.put( '/', function ( req, res ) {
+  var document = { data: req.body}
+  console.log('document:', document)
+
+  collection(COL).insertOne( document ).then(function(r) {
+    res.send( r );
+  });
+} );
+
+router.put( '/:collection', function ( req, res ) {
+  var document = {data: req.body}
+  console.log(document)
+  collection(req.params.collection + 'csv').insertOne( document ).then(function(r) {
+    res.send( r );
+  });
+} );
+
+
 module.exports = router;
